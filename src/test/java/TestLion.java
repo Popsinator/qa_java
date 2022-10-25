@@ -29,8 +29,7 @@ public class TestLion {
     public static Object[][] testData() {
         return new Object[][] {
                 {"Самец", true, List.of("Животные", "Птицы", "Рыба")},
-                {"Самка", false, List.of("Животные", "Птицы", "Рыба")},
-                {"ОНО", false, List.of("Животные", "Птицы", "Рыба")}
+                {"Самка", false, List.of("Животные", "Птицы", "Рыба")}
         };
     }
 
@@ -46,10 +45,15 @@ public class TestLion {
     }
 
     @Test
-    public void testSex() throws Exception {
-        try {
+    public void testSexValidValue() throws Exception {
             lion = new Lion(sex, feline);
             Assert.assertEquals(isPredator, lion.doesHaveMane());
+    }
+
+    @Test
+    public void testSexNotValidValue() {
+        try {
+            lion = new Lion("ОНО", feline);
         } catch (Exception exception) {
             Assert.assertEquals("Используйте допустимые значения пола животного - самец или самка",
                     exception.getMessage());
@@ -57,26 +61,16 @@ public class TestLion {
     }
 
     @Test
-    public void testLionKitten() throws Exception {
-        try {
+    public void testLionKittenWithValidValue() throws Exception {
             lion = new Lion(sex, feline);
             Mockito.when(feline.getKittens()).thenReturn(5);
             Assert.assertEquals(5, lion.getKittens());
-        } catch (Exception exception) {
-            Assert.assertEquals("Используйте допустимые значения пола животного - самец или самка",
-                    exception.getMessage());
-        }
     }
 
     @Test
     public void testLionFood() throws Exception {
-        try {
             lion = new Lion(sex, feline);
             Mockito.when(feline.eatMeat()).thenReturn(foodLion);
             Assert.assertEquals(foodLion, lion.getFood());
-        } catch (Exception exception) {
-            Assert.assertEquals("Используйте допустимые значения пола животного - самец или самка",
-                    exception.getMessage());
-        }
     }
 }
